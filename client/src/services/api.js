@@ -4,7 +4,20 @@
  * JWT Bearer tokens from localStorage, and provides structured error handling.
  */
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+/**
+ * Dynamically resolves the backend API base URL with fallback to local development.
+ * Normalizes trailing slashes and ensures /api path is present.
+ */
+const getBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (!envUrl || envUrl.trim() === '') {
+    return 'http://localhost:5000/api';
+  }
+  const clean = envUrl.trim().replace(/\/+$/, '');
+  return clean.endsWith('/api') ? clean : `${clean}/api`;
+};
+
+const BASE_URL = getBaseUrl();
 
 /**
  * Core HTTP Request Wrapper
