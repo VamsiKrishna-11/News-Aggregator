@@ -1,0 +1,48 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: -0.5px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-box {
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background-color: var(--accent-color);
+  color: #0f172a;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
