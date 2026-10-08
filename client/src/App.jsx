@@ -6,6 +6,8 @@ import AuthModal from './components/AuthModal';
 import BookmarksDrawer from './components/BookmarksDrawer';
 
 export default function App() {
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
   const [articles, setArticles] = useState([]);
   const [category, setCategory] = useState('general');
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,7 +30,7 @@ export default function App() {
       setLoading(true);
       setError(null);
       try {
-        let url = `http://localhost:5000/api/news?category=${category}`;
+        let url = `${API_BASE}/api/news?category=${category}`;
         if (searchTerm.trim() !== '') {
           url += `&q=${encodeURIComponent(searchTerm)}`;
         }
@@ -52,7 +54,7 @@ export default function App() {
   const fetchBookmarks = async () => {
     if (!token) return;
     try {
-      const res = await fetch('http://localhost:5000/api/bookmarks', {
+      const res = await fetch(`${API_BASE}/api/bookmarks`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -90,7 +92,7 @@ export default function App() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/bookmarks', {
+      const res = await fetch(`${API_BASE}/api/bookmarks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +122,7 @@ export default function App() {
 
   const handleDeleteBookmark = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/bookmarks/${id}`, {
+      const res = await fetch(`${API_BASE}/api/bookmarks/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
