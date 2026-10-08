@@ -1,54 +1,11 @@
 import { z } from 'zod';
 
-/**
- * Zod validation schema for bookmark creation (POST /api/bookmarks)
- */
 export const createBookmarkSchema = z.object({
-  title: z
-    .string({ required_error: 'Article title is required' })
-    .trim()
-    .min(1, 'Article title cannot be empty')
-    .max(1000, 'Article title cannot exceed 1000 characters'),
-  url: z
-    .string({ required_error: 'Article URL is required' })
-    .trim()
-    .url('Please provide a valid article URL'),
-  description: z
-    .string()
-    .trim()
-    .optional()
-    .nullable()
-    .transform((val) => val ?? ''),
-  imageUrl: z
-    .string()
-    .trim()
-    .optional()
-    .nullable()
-    .transform((val) => val ?? ''),
-  sourceName: z
-    .string()
-    .trim()
-    .optional()
-    .nullable()
-    .transform((val) => (val && val.trim().length > 0 ? val.trim() : 'Unknown Source')),
-  category: z
-    .string()
-    .trim()
-    .optional()
-    .nullable()
-    .transform((val) => (val && val.trim().length > 0 ? val.toLowerCase().trim() : 'general')),
-  publishedAt: z
-    .union([z.string(), z.date()])
-    .optional()
-    .nullable()
-    .transform((val) => {
-      if (!val) return new Date();
-      const parsed = new Date(val);
-      return isNaN(parsed.getTime()) ? new Date() : parsed;
-    }),
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().optional().default(''),
+  url: z.string().url('A valid article URL is required'),
+  urlToImage: z.string().optional().default(''),
+  sourceName: z.string().optional().default('Unknown Source'),
+  publishedAt: z.string().optional(),
+  category: z.string().optional().default('general'),
 });
-
-// Semantic aliases
-export const bookmarkSchema = createBookmarkSchema;
-export const saveBookmarkSchema = createBookmarkSchema;
-export default createBookmarkSchema;
